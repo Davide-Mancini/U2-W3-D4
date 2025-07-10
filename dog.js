@@ -6,6 +6,18 @@ const immaginiDefault = document.querySelectorAll("img");
 console.log(immaginiDefault);
 const editButton = document.getElementsByClassName("editButton");
 console.log(editButton[0].innerText);
+const abilitaBottoniHide = () => {
+  const editButtons = document.querySelectorAll(".editButton");
+
+  editButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const card = e.target.closest(".col-md-4");
+      if (card) {
+        card.remove();
+      }
+    });
+  });
+};
 //
 //
 const getHamster = function () {
@@ -23,9 +35,26 @@ const getHamster = function () {
     })
     .then((arrayHamster) => {
       console.log(arrayHamster.photos);
+      // sostituisco 9min con l'id di ogni foto
+
       const foto = arrayHamster.photos;
 
       buttonLoad.addEventListener("click", () => {
+        // for (let i = 0; i < arrayHamster.photos.length; i++) {
+        //   const id = arrayHamster.photos[i].id;
+        //   const small = document.getElementsByTagName("small");
+        //   console.log(small[0].textContent);
+        //   for (let i = 0; i < small.length; i++) {
+        //     small[i].textContent = id;
+        //   }
+        // }
+        for (let i = 0; i < arrayHamster.photos.length; i++) {
+          const id = arrayHamster.photos[i].id;
+          const small = document.getElementsByTagName("small");
+          if (small[i]) {
+            small[i].textContent = id;
+          }
+        }
         for (let i = 0; i < editButton.length; i++) {
           editButton[i].innerText = "Hide";
         }
@@ -36,6 +65,15 @@ const getHamster = function () {
           }
         });
       });
+      //   editButton.forEach((button) => {
+      //     button.addEventListener("click", (e) => {
+      //       const card = e.target.closest(".col-md-4");
+      //       if (card) {
+      //         card.classList.add("d-none");
+      //       }
+      //     });
+      //   });
+      abilitaBottoniHide();
     })
     .catch((err) => {
       console.log("errore", err);
@@ -55,7 +93,15 @@ const getTiger = function () {
       }
     })
     .then((arrayTiger) => {
-      console.log(arrayTiger.photos);
+      console.log(arrayTiger);
+      // sostituisco 9min con l'id di ogni foto
+      for (let i = 0; i < arrayTiger.photos.length; i++) {
+        const id = arrayTiger.photos[i].id;
+        const small = document.getElementsByTagName("small");
+        if (small[i]) {
+          small[i].textContent = id;
+        }
+      }
       const foto = arrayTiger.photos;
       secondButtonLoad.addEventListener("click", () => {
         for (let i = 0; i < editButton.length; i++) {
@@ -67,11 +113,47 @@ const getTiger = function () {
           }
         });
       });
+      abilitaBottoniHide();
     })
     .catch((err) => {
       console.log("errore", err);
     });
 };
+const endpointSearch =
+  "https://www.pexels.com/it-it/api/documentation/#photos-search";
 
+const getSearch = function () {
+  fetch(endpointSearch, {
+    headers: {
+      Authorization: "F2ozIYCM5CH2HP96zCp7SCHCm6mZEkPu8mC7ZikeiXjAJzvkTodoKWMW",
+    },
+  })
+    .then((Response) => {
+      if (Response.ok === true) {
+        return Response.json();
+      } else {
+        throw new Error("errore");
+      }
+    })
+    .then((arraySearch) => {
+      console.log(arraySearch);
+    })
+    .catch((err) => {
+      console.log("errore", err);
+    });
+};
+const ricerca = document.getElementById("spazioCerca");
+ricerca.innerHTML = `<form action='/submit'>
+  <div class="mb-3">
+    <label for="search" class="form-label">SEARCH</label>
+    <input type="text" class="form-control" id="search" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>`;
+const inputSearch = document.getElementById("search");
+console.log(inputSearch.value);
 getHamster();
 getTiger();
+getSearch();
