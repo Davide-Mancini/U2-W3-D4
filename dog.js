@@ -1,11 +1,17 @@
+// endpoiny criceti
 const endpointHamster = "https://api.pexels.com/v1/search?query=hamsters";
+// endpoint tigri
 const endpointTiger = "https://api.pexels.com/v1/search?query=tigers";
+// recupero i bottoni
 const buttonLoad = document.getElementById("buttonLoad");
 const secondButtonLoad = document.getElementById("secondButtonLoad");
+// recupero immagini da cambiare al click
 const immaginiDefault = document.querySelectorAll("img");
 console.log(immaginiDefault);
+// recupero bottone per eliminare le card
 const editButton = document.getElementsByClassName("editButton");
 console.log(editButton[0].innerText);
+// funzione che quando chiamata abilita il bottone che fa scomparire le card
 const abilitaBottoniHide = () => {
   const editButtons = document.querySelectorAll(".editButton");
 
@@ -20,6 +26,7 @@ const abilitaBottoniHide = () => {
 };
 //
 //
+// funzione per far apparire le card criceto
 const getHamster = function () {
   fetch(endpointHamster, {
     headers: {
@@ -79,6 +86,7 @@ const getHamster = function () {
       console.log("errore", err);
     });
 };
+// funzione per far apparire card con tigri
 const getTiger = function () {
   fetch(endpointTiger, {
     headers: {
@@ -142,6 +150,7 @@ const getSearch = function () {
       console.log("errore", err);
     });
 };
+// inserisco form per ricerca nuove immagini
 const ricerca = document.getElementById("spazioCerca");
 ricerca.innerHTML = `<form action='/submit'>
   <div class="mb-3">
