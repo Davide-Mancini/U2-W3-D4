@@ -68,7 +68,7 @@ const getHamster = function () {
 
         immaginiDefault.forEach((img, i) => {
           if (foto[i]) {
-            img.src = foto[i].src.medium;
+            img.setAttribute("src", foto[i].src.medium);
           }
         });
       });
